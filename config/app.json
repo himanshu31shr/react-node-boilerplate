@@ -1,0 +1,6 @@
+{
+  "defaultRoute": {
+    "path": "/",
+    "route": "home"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "routes",
+  "private": true,
+  "main": "./routes.js"
+}
