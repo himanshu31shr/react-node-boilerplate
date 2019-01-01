@@ -1,4 +1,6 @@
-const BaseController = require('./BaseController');
+const BaseController = require('./BaseController'),
+    Models = require('../models'),
+    AuthEvents = require('../events/AuthEvents')
 
 class HomeController extends BaseController {
 
@@ -7,22 +9,17 @@ class HomeController extends BaseController {
     }
 
     index(req, res, next) {
-        // super.index(req, res, next);
-        return res.render('index');
+        return Models.user
+            .findAll({
+                attributes:['id', 'name']
+            })
+            .then(docs => {
+                AuthEvents.login(res)
+                return res.render('index');
+            })
+            .catch(err => next(new Error(err)))
+
     }
-
-    // update(req, res, next){
-    //     super.update(req, res, next);
-    //     return res.send(this.repository.getById());
-    // }
-
-    // show(req, res, next){
-    //     return res.send('asdas')
-    // }
-
-    // edit(req, res, next){
-    //     return res.send('test')
-    // }
 }
 
 module.exports = new HomeController;
