@@ -21,6 +21,8 @@ import routes from '../../routes';
 import Navigation from './navigation';
 import ErrorBoundary from "../../components/ErrorBoundary";
 import Loader from "../../components/Loader";
+import Sockets from '../../components/Sockets'
+import Snackbar from '@material-ui/core/Snackbar';
 
 const drawerWidth = 240;
 
@@ -83,7 +85,8 @@ const styles = theme => ({
 
 const initialState = () => {
     return {
-        open: false
+        open: false,
+        snackBar:false
     }
 };
 
@@ -95,6 +98,15 @@ class Default extends React.Component {
         this.state = initialState();
     }
 
+    componentDidMount() {
+        let that = this;
+        (new Sockets()).login(function(data){
+            that.setState({
+                snackBar:data
+            })
+        })
+    }
+
     handleDrawerOpen = () => {
         this.setState({open: true});
     };
@@ -103,12 +115,26 @@ class Default extends React.Component {
         this.setState({open: false});
     };
 
+    clearSnack = () => {
+        this.setState({
+            snackBar:false
+        })
+    }
+
     render() {
         const {classes, theme} = this.props;
         const {open} = this.state;
         return <React.Fragment>
             <div className={classes.root}>
                 <CssBaseline/>
+
+                <Snackbar
+                    open={this.state.snackBar}
+                    autoHideDuration={2000}
+                    onClose={this.clearSnack}
+                    message={<span id="message-id">{this.state.snackBar}</span>}
+                />
+
                 <AppBar
                     position="fixed"
                     className={classNames(classes.appBar, {
@@ -182,7 +208,6 @@ class Default extends React.Component {
                             </Switch>
                         </Suspense>
                     </ErrorBoundary>
-
                 </main>
             </div>
         </React.Fragment>

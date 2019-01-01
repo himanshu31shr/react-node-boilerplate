@@ -1,6 +1,6 @@
 {
   "driver": "mysql",
-  "username": "",
-  "password": "",
-  "databaseName": ""
+  "username": "root",
+  "password": "mysql12345",
+  "name": "react-node-boilerplate"
 }

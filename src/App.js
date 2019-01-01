@@ -12,10 +12,10 @@ WebFont.load({
 });
 
 class App extends Component {
+
     render() {
         return (
             <div className="App">
-
                 <Router>
                     <Switch>
                         <Route path={'/'} component={Default}/>
@@ -23,7 +23,6 @@ class App extends Component {
                         <Redirect to={'/404'}/>
                     </Switch>
                 </Router>
-
             </div>
         );
     }

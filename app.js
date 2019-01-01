@@ -19,6 +19,8 @@ app.use(bodyParser.urlencoded());
 // Adding sockets to the request
 app.use(function (req, res, next) {
     res.io = io;
+    res.users = {};
+    res.events = {};
     next();
 });
 
